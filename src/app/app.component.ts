@@ -7,11 +7,12 @@ import { HeroService } from './shared/hero.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  hero: any;
-
+  model: any;
+  powers = ['聪明绝顶', '善于沟通',
+  '有领导力', '善于改变'];
   submitted = false;
   constructor(private heros: HeroService) {
-    this.hero = heros.createHero();
+    this.model = heros.createHero();
   }
 
   onSubmit() { this.submitted = true; }
