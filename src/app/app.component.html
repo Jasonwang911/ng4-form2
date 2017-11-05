@@ -1,24 +1,49 @@
-<div class="container">
-  <h1>Hero Form</h1>
-  <form>
+<div class="container" [hidden]="submitted">
+  <h1>英雄名单</h1>
+  {{diagnostic}}
+  <form #heroForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" required>
+      <label for="name">姓名</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" #spy required #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        姓名属性不能为空
+      </div>
+      <br>TODO: remove this: {{spy.className}}
     </div>
 
     <div class="form-group">
       <label for="alterEgo">Alter Ego</label>
-      <input type="text" class="form-control" id="alterEgo">
+      <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo">
     </div>
 
     <div class="form-group">
       <label for="power">英雄的特点</label>
-      <select class="form-control" id="power" required>
+      <select class="form-control" id="power" required [(ngModel)]="model.power" name="power">
         <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
       </select>
     </div>
 
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">提交</button>
+
+    <button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">添加英雄</button>
 
   </form>
+</div>
+<!-- 提交表单后显示 -->
+<div [hidden]="!submitted">
+  <h2>你提交的信息如下:</h2>
+  <div class="row">
+    <div class="col-xs-3">姓名</div>
+    <div class="col-xs-9  pull-left">{{ model.name }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">Alter Ego</div>
+    <div class="col-xs-9 pull-left">{{ model.alterEgo }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">英雄的特点</div>
+    <div class="col-xs-9 pull-left">{{ model.power }}</div>
+  </div>
+  <br>
+  <button class="btn btn-primary" (click)="submitted=false">关闭</button>
 </div>

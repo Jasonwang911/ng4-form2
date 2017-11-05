@@ -12,6 +12,10 @@ export class HeroService {
     return new Hero(1, 'jason', this.powers[0], '好人');
   }
 
+  newHero () {
+    return new Hero(2, '', '', '');
+  }
+
 }
 
 class Hero {
